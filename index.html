@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diego Magarian Conde - CV</title>
+  
+  <!-- Dependencies -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style id="app-style">
+    :root {
+      --bg-primary: #121212;
+      --bg-secondary: #1e1e1e;
+      --text-primary: #ffffff;
+      --text-secondary: #a0aec0;
+      --accent: #3182ce;
+      --accent-hover: #2b6cb0;
+      --card-bg: #2d3748;
+    }
+    
+    .light-mode {
+      --bg-primary: #f7fafc;
+      --bg-secondary: #edf2f7;
+      --text-primary: #1a202c;
+      --text-secondary: #4a5568;
+      --card-bg: #ffffff;
+    }
+    
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .nav-link {
+      position: relative;
+      padding-bottom: 5px;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .skill-bar {
+      height: 8px;
+      border-radius: 4px;
+      background-color: var(--bg-secondary);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .skill-progress {
+      height: 100%;
+      background-color: var(--accent);
+      border-radius: 4px;
+      width: 0;
+      transition: width 1s ease;
+    }
+    
+    .timeline-container {
+      position: relative;
+    }
+    
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 8px;
+      height: 100%;
+      width: 2px;
+      background-color: var(--accent);
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: var(--accent);
+    }
+    
+    .profile-img {
+      border: 4px solid var(--accent);
+      transition: transform 0.5s ease;
+    }
+    
+    .profile-img:hover {
+      transform: scale(1.05);
+    }
+    
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+      
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-secondary);
+        flex-direction: column;
+        padding: 20px;
+        z-index: 10;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+    }
+
+    .hamburger {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: var(--text-primary);
+      border-radius: 2px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+    }
+
+    .hamburger span:nth-child(1) {
+      top: 6px;
+    }
+
+    .hamburger span:nth-child(2) {
+      top: 12px;
+    }
+
+    .hamburger span:nth-child(3) {
+      top: 18px;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      top: 12px;
+      transform: rotate(135deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      top: 12px;
+      transform: rotate(-135deg);
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background-color: var(--bg-secondary);
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      position: relative;
+      animation: modalFade 0.3s ease;
+    }
+    
+    @keyframes modalFade {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    input, textarea {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    .theme-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background-color: var(--bg-secondary);
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .theme-switch-toggle {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-switch.light .theme-switch-toggle {
+      transform: translateX(30px);
+    }
+  </style>
+</head>
+<body class="dark-mode">
+  <!-- Header & Navigation -->
+  <header class="fixed top-0 left-0 w-full bg-opacity-90 backdrop-filter backdrop-blur-lg z-10" style="background-color: var(--bg-primary);">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex justify-between items-center">
+        <a href="javascript:void(0)" class="text-2xl font-bold">Diego<span class="text-blue-500">.</span></a>
+        
+        <div class="menu-toggle md:hidden">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        
+        <nav class="hidden md:block">
+          <ul class="flex space-x-6">
+            <li><a href="#about" class="nav-link hover:text-blue-500 transition duration-300">Sobre Mí</a></li>
+            <li><a href="#experience" class="nav-link hover:text-blue-500 transition duration-300">Experiencia</a></li>
+            <li><a href="#projects" class="nav-link hover:text-blue-500 transition duration-300">Proyectos</a></li>
+            <li><a href="#education" class="nav-link hover:text-blue-500 transition duration-300">Educación</a></li>
+            <li><a href="#skills" class="nav-link hover:text-blue-500 transition duration-300">Habilidades</a></li>
+            <li><a href="#contact" class="nav-link hover:text-blue-500 transition duration-300">Contacto</a></li>
+          </ul>
+        </nav>
+        
+        <div class="theme-switch">
+          <div class="theme-switch-toggle"></div>
+        </div>
+      </div>
+      
+      <!-- Mobile navigation -->
+      <nav class="nav-links md:hidden">
+        <ul class="flex flex-col space-y-4">
+          <li><a href="#about" class="nav-link hover:text-blue-500 transition duration-300">Sobre Mí</a></li>
+          <li><a href="#experience" class="nav-link hover:text-blue-500 transition duration-300">Experiencia</a></li>
+          <li><a href="#projects" class="nav-link hover:text-blue-500 transition duration-300">Proyectos</a></li>
+          <li><a href="#education" class="nav-link hover:text-blue-500 transition duration-300">Educación</a></li>
+          <li><a href="#skills" class="nav-link hover:text-blue-500 transition duration-300">Habilidades</a></li>
+          <li><a href="#contact" class="nav-link hover:text-blue-500 transition duration-300">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 pt-28 pb-12">
+    <!-- Hero Section -->
+    <section id="about" class="min-h-screen flex flex-col md:flex-row items-center justify-center section">
+      <div class="md:w-1/2 flex justify-center mb-8 md:mb-0" data-aos="fade-right">
+        <div class="relative">
+          <div class="w-64 h-64 rounded-full overflow-hidden profile-img">
+            <img src="/Images/IMG_6165-removebg-preview.png" alt="Profile" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute -bottom-4 -right-4 bg-blue-500 text-white px-4 py-2 rounded-lg">
+            <span class="font-medium">JR Full Stack Developer</span>
+          </div>
+        </div>
+      </div>
+      <div class="md:w-1/2" data-aos="fade-left">
+        <h1 class="text-5xl font-bold mb-4">Diego Magarian Conde</h1>
+        <h2 class="text-2xl mb-6 text-blue-500">Programador JR Full Stack | Web Developer | Backend</h2>
+        <p class="mb-8 text-lg" style="color: var(--text-secondary);">
+          Soy un programador junior apasionado por construir soluciones tecnológicas completas, desde el modelado funcional hasta la implementación final. Con experiencia en desarrollo web full stack, diseño de APIs RESTful y bases de datos relacionales y no relacionales.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="https://www.linkedin.com/in/diego-magarian-42132a212/" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition duration-300 flex items-center">
+            <i class="fab fa-linkedin mr-2"></i> LinkedIn
+          </a>
+          <a href="https://github.com/diego2828" target="_blank" class="border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-6 py-3 rounded-lg transition duration-300 flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+          </a>
+          <a href="mailto:diegomagarian@gmail.com" target="_blank" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition duration-300 flex items-center">
+            <i class="fas fa-envelope mr-2"></i> Email
+          </a>
+
+          <a href="https://wa.me/59899311076" target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition duration-300 flex items-center">
+            <i class="fab fa-whatsapp mr-2 "></i> WhatsApp
+          </a>
+
+        
+
+
+
+
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 section">
+      <div class="mb-16 text-center" data-aos="fade-up">
+        <h2 class="text-4xl font-bold mb-2">Experiencia Profesional</h2>
+        <div class="w-24 h-1 bg-blue-500 mx-auto"></div>
+      </div>
+      
+      <div class="timeline-container pl-10" data-aos="fade-up">
+        <div class="mb-12 relative">
+          <div class="timeline-dot"></div>
+          <div class="card p-6">
+            <div class="flex flex-wrap justify-between mb-4">
+              <h3 class="text-2xl font-bold">Almader</h3>
+              <div class="text-blue-500">
+                <span class="mr-2">Montevideo, Uruguay</span>
+                <span>Marzo 2022–Actualidad</span>
+              </div>
+            </div>
+            <p class="mb-4" style="color: var(--text-secondary);">
+              Trabajo en una empresa de logística y distribución de bebidas, donde me encargo de la facturación y el control de stock. Esta experiencia me permitió desarrollar habilidades en la gestión de sistemas administrativos, manejo de grandes volúmenes de datos y optimización de procesos de inventario.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full text-sm" style="background-color: var(--bg-primary);">Gestión de Datos</span>
+              <span class="px-3 py-1 rounded-full text-sm" style="background-color: var(--bg-primary);">Optimización de Procesos</span>
+              <span class="px-3 py-1 rounded-full text-sm" style="background-color: var(--bg-primary);">Logística</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 section">
+      <div class="mb-16 text-center" data-aos="fade-up">
+        <h2 class="text-4xl font-bold mb-2">Proyectos Técnicos Destacados</h2>
+        <div class="w-24 h-1 bg-blue-500 mx-auto"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="card p-6" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-2xl font-bold mb-3">SISTEMA DE GESTION DE ENVIOS Y USUARIOS FULL STACK (.NET)</h3>
+          <div class="mb-4 text-sm" style="color: var(--text-secondary);">
+            <span class="mr-2">Tecnologías:</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">C#</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">ASP.NET MVC</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">JWT</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">SQL Server</span>
+          </div>
+          <p class="mb-4" style="color: var(--text-secondary);">
+            Proyecto académico completo que incluye frontend MVC y backend RESTful desacoplado. Desarrollé una Web API segura con autenticación JWT y endpoints para usuarios, envíos y seguimiento.
+          </p>
+          <ul class="list-disc ml-5 mb-4" style="color: var(--text-secondary);">
+            <li>Arquitectura en capas, uso de ViewModels, controladores y servicios internos.</li>
+            <li>Implementación de seguridad, despliegue con Web Deploy y configuración avanzada del entorno.</li>
+          </ul>
+        </div>
+        
+        <div class="card p-6" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="text-2xl font-bold mb-3">MODELADO DE CASOS DE USO ANÁLISIS FUNCIONAL (ASTAH)</h3>
+          <div class="mb-4 text-sm" style="color: var(--text-secondary);">
+            <span class="mr-2">Tecnologías:</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">UML</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">Astah</span>
+          </div>
+          <p class="mb-4" style="color: var(--text-secondary);">
+            Modelado funcional previo al desarrollo técnico. Incluye casos de uso, narrativa funcional, flujos alternativos, tablas y relación entre actores.
+          </p>
+          <p style="color: var(--text-secondary);">
+            Proporcionó soporte conceptual para el desarrollo de un sistema de gestión de envíos.
+          </p>
+        </div>
+        
+        <div class="card p-6" data-aos="fade-up" data-aos-delay="300">
+          <h3 class="text-2xl font-bold mb-3">ESTRUCTURAS DE DATOS EN JAVA - SIMULACIÓN DE SISTEMA</h3>
+          <div class="mb-4 text-sm" style="color: var(--text-secondary);">
+            <span class="mr-2">Tecnologías:</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">Java</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">NetBeans</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">POO</span>
+          </div>
+          <p class="mb-4" style="color: var(--text-secondary);">
+            Implementación de estructuras fundamentales para gestión de salas, entradas, eventos y usuarios.
+          </p>
+          <p style="color: var(--text-secondary);">
+            Desarrollo modular con interfaces y clases personalizadas.
+          </p>
+        </div>
+        
+        <div class="card p-6" data-aos="fade-up" data-aos-delay="400">
+          <h3 class="text-2xl font-bold mb-3">CONSULTAS MULTIMODELO SQL Y MONGODB</h3>
+          <div class="mb-4 text-sm" style="color: var(--text-secondary);">
+            <span class="mr-2">Tecnologías:</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">SQL Server</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">MongoDB</span>
+          </div>
+          <p class="mb-4" style="color: var(--text-secondary);">
+            Diseño y ejecución de consultas sobre un sistema de reparaciones de vehículos. Script SQL con modelado de datos, operaciones avanzadas, consultas SQL subconsultas, creación de vistas, funciones, procedimientos y triggers.
+          </p>
+          <p style="color: var(--text-secondary);">
+            Consultas en MongoDB para análisis de documentos de historial de reparaciones.
+          </p>
+        </div>
+        
+        <div class="card p-6" data-aos="fade-up" data-aos-delay="500">
+          <h3 class="text-2xl font-bold mb-3">INTERFAZ WEB CON BULMA CSS - LANDING PAGE RESPONSIVE</h3>
+          <div class="mb-4 text-sm" style="color: var(--text-secondary);">
+            <span class="mr-2">Tecnologías:</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">HTML</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">CSS</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">Bulma</span>
+            <span class="px-2 py-1 rounded-full text-xs mr-1" style="background-color: var(--bg-primary);">UX/UI</span>
+          </div>
+          <p class="mb-4" style="color: var(--text-secondary);">
+            Diseño y maquetado de una landing page moderna y completamente responsive.
+          </p>
+          <p style="color: var(--text-secondary);">
+            Uso de grillas, imágenes vectoriales, tipografías personalizadas y estructura de componentes. Integración de assets y foco en experiencia del usuario (móvil y escritorio).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 section">
+      <div class="mb-16 text-center" data-aos="fade-up">
+        <h2 class="text-4xl font-bold mb-2">Educación</h2>
+        <div class="w-24 h-1 bg-blue-500 mx-auto"></div>
+      </div>
+      
+      <div class="card p-8 max-w-3xl mx-auto" data-aos="fade-up">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+          <h3 class="text-2xl font-bold">Universidad ORT</h3>
+          <div class="mt-2 md:mt-0 py-1 px-3 rounded-lg bg-blue-500 text-white text-sm">
+            Analista Programador
+          </div>
+        </div>
+        <p class="mb-6" style="color: var(--text-secondary);">
+          Estudiante avanzado, cursando último año de la carrera, con importantes conocimientos adquiridos. He desarrollado proyectos académicos aplicando buenas prácticas de desarrollo y optimización de código.
+        </p>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 section">
+      <div class="mb-16 text-center" data-aos="fade-up">
+        <h2 class="text-4xl font-bold mb-2">Habilidades Técnicas</h2>
+        <div class="w-24 h-1 bg-blue-500 mx-auto"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div data-aos="fade-right">
+          <h3 class="text-2xl font-bold mb-6">Desarrollo Front End</h3>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>HTML & CSS</span>
+              <span>90%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="90%"></div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>Bootstrap</span>
+              <span>85%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="85%"></div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>Bulma CSS</span>
+              <span>80%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="80%"></div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>JavaScript</span>
+              <span>75%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="75%"></div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>React</span>
+              <span>50%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="50%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div data-aos="fade-left">
+          <h3 class="text-2xl font-bold mb-6">Desarrollo Backend y Programación</h3>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>C#</span>
+              <span>90%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="90%"></div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>ASP.NET Web API</span>
+              <span>80%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="80%"></div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>SQL Server & MongoDB</span>
+              <span>75%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="75%"></div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>Java</span>
+              <span>60%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="60%"></div>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <div class="flex justify-between mb-2">
+              <span>Python</span>
+              <span>40%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="40%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card p-6" data-aos="zoom-in">
+          <h3 class="text-xl font-bold mb-4">Bases de Datos</h3>
+          <ul class="space-y-2" style="color: var(--text-secondary);">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> SQL Server
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> MongoDB
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> Diseño de esquemas
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> Consultas avanzadas
+            </li>
+          </ul>
+        </div>
+        
+        <div class="card p-6" data-aos="zoom-in" data-aos-delay="100">
+          <h3 class="text-xl font-bold mb-4">Herramientas y Metodologías</h3>
+          <ul class="space-y-2" style="color: var(--text-secondary);">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> Git/GitHub
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> Postman
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> AWS/Azure
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> UML/Astah
+            </li>
+          </ul>
+        </div>
+        
+        <div class="card p-6" data-aos="zoom-in" data-aos-delay="200">
+          <h3 class="text-xl font-bold mb-4">Desarrollo Mobile</h3>
+          <ul class="space-y-2" style="color: var(--text-secondary);">
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> Ionic
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> Android Studio
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check-circle text-blue-500 mr-2"></i> Responsive Design
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 section">
+      <div class="mb-16 text-center" data-aos="fade-up">
+        <h2 class="text-4xl font-bold mb-2">Contacto</h2>
+        <div class="w-24 h-1 bg-blue-500 mx-auto"></div>
+      </div>
+      
+      <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="card p-8" data-aos="fade-right">
+            <h3 class="text-2xl font-bold mb-6">Información de Contacto</h3>
+            
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-envelope text-white"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">Email</h4>
+                  <a href="mailto:diegomagarian@gmail.com" class="hover:text-blue-500 transition duration-300">diegomagarian@gmail.com</a>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-phone text-white"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">Teléfono</h4>
+                  <a href="https://api.whatsapp.com/send/?phone=59899311076&text&type=phone_number&app_absent=0" class="hover:text-blue-500 transition duration-300">+598 99 311 076</a>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-map-marker-alt text-white"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">Ubicación</h4>
+                  <p style="color: var(--text-secondary);">Montevideo, Uruguay</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                  <i class="fab fa-linkedin text-white"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">LinkedIn</h4>
+                  <a href="https://www.linkedin.com/in/diego-magarian-42132a212/" target="_blank" class="hover:text-blue-500 transition duration-300">diego-magarian-42132a212</a>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                  <i class="fab fa-github text-white"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold mb-1">GitHub</h4>
+                  <a href="https://github.com/diego2828" target="_blank" class="hover:text-blue-500 transition duration-300">diego2828</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card p-8" data-aos="fade-left">
+            <h3 class="text-2xl font-bold mb-6">¿Tienes un Proyecto?</h3>
+            <p class="mb-6" style="color: var(--text-secondary);">
+              Estoy disponible para oportunidades de trabajo freelance, colaboraciones o posiciones a tiempo completo. ¡Contáctame para hablar sobre tu proyecto!
+            </p>
+          
+            
+            <a href="https://api.whatsapp.com/send/?phone=59899311076&text&type=phone_number&app_absent=0"  class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
+                <i class="fab fa-whatsapp mr-2"></i> Enviar Mensaje WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="background-color: var(--bg-secondary);" class="py-8">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <h2 class="text-2xl font-bold">Diego<span class="text-blue-500">.</span></h2>
+          <p class="mt-2" style="color: var(--text-secondary);">JR Full Stack Developer | 2025</p>
+        </div>
+        
+        <div class="flex space-x-4">
+          <a href="https://www.linkedin.com/in/diego-magarian-42132a212/" target="_blank" class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center hover:bg-blue-600 transition duration-300">
+            <i class="fab fa-linkedin-in text-white"></i>
+          </a>
+          <a href="https://github.com/diego2828" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-gray-800 transition duration-300">
+            <i class="fab fa-github text-white"></i>
+          </a>
+          <a href="mailto:diegomagarian@gmail.com" target="_blank" class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center hover:bg-red-600 transition duration-300">
+            <i class="fas fa-envelope text-white"></i>
+          </a>
+
+          <a href="https://wa.me/59899311076" target="_blank" class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-600 transition duration-300">
+            <i class="fab fa-whatsapp "></i> 
+          </a>
+
+
+
+
+
+
+
+        </div>
+      </div>
+      
+      <div class="mt-8 pt-8 border-t border-gray-700 text-center" style="color: var(--text-secondary);">
+        <p>&copy; 2025 Diego Magarian Conde. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold">Contáctame</h3>
+        <button id="closeModal" class="text-gray-400 hover:text-gray-600">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      
+      <form id="contactForm">
+        <div class="mb-4">
+          <label for="name" class="block mb-2">Nombre</label>
+          <input type="text" id="name" class="w-full px-4 py-2 rounded-lg" required>
+        </div>
+        
+        <div class="mb-4">
+          <label for="email" class="block mb-2">Email</label>
+          <input type="email" id="email" class="w-full px-4 py-2 rounded-lg" required>
+        </div>
+        
+        <div class="mb-6">
+          <label for="message" class="block mb-2">Mensaje</label>
+          <textarea id="message" rows="5" class="w-full px-4 py-2 rounded-lg" required></textarea>
+        </div>
+        
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition duration-300">
+          Enviar Mensaje
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Download Resume button (fixed) -->
+  <div class="fixed bottom-6 right-6 z-10">
+    <button id="downloadBtn" class="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-full shadow-lg transition duration-300">
+      <i class="fas fa-download"></i>
+    </button>
+  </div>
+
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <script id="app-script">
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    // DOM Elements
+    const themeSwitch = document.querySelector('.theme-switch');
+    const body = document.body;
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const hamburger = document.querySelector('.hamburger');
+    //const contactModal = document.getElementById('contactModal');
+    //const contactBtn = document.getElementById('contactBtn');
+    //const showContactForm = document.getElementById('showContactForm');
+    const closeModal = document.getElementById('closeModal');
+    const contactForm = document.getElementById('contactForm');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const allLinks = document.querySelectorAll('a[href^="#"]');
+
+    // Theme switcher
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      if (savedTheme === 'light') {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        themeSwitch.classList.add('light');
+      }
+    }
+
+    themeSwitch.addEventListener('click', () => {
+      if (body.classList.contains('dark-mode')) {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        themeSwitch.classList.add('light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        themeSwitch.classList.remove('light');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // Mobile menu
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('open');
+    });
+
+    // Modal handling
+    function openModal() {
+      contactModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        contactModal.style.opacity = 1;
+      }, 10);
+    }
+
+    function closeModalFunc() {
+      contactModal.style.opacity = 0;
+      setTimeout(() => {
+        contactModal.style.display = 'none';
+        document.body.style.overflow = '';
+      }, 300);
+    }
+
+    //contactBtn.addEventListener('click', openModal);
+    //showContactForm.addEventListener('click', openModal);
+    closeModal.addEventListener('click', closeModalFunc);
+
+    contactModal.addEventListener('click', (e) => {
+      if (e.target === contactModal) {
+        closeModalFunc();
+      }
+    });
+
+    // Form handling
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      // Stub for API call
+      console.log(`Form submitted with: ${name}, ${email}, ${message}`);
+      
+      alert('Mensaje enviado correctamente. ¡Gracias por contactarme!');
+      closeModalFunc();
+      contactForm.reset();
+    });
+
+    // Download CV functionality
+    downloadBtn.addEventListener('click', () => {
+      
+
+      const link = document.createElement('a');
+        link.href = 'cv/CVDiegoMagarian.pdf'; // Ruta relativa al archivo
+        link.download = 'CVDiegoMagarian.pdf'; // Nombre del archivo al descargar
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      
+
+    });
+
+    // Smooth scrolling
+    allLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          const headerOffset = 80;
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('open');
+          }
+        }
+      });
+    });
+
+    // Skills animation
+    function animateSkills() {
+      const skillBars = document.querySelectorAll('.skill-progress');
+      
+      skillBars.forEach(bar => {
+        const width = bar.getAttribute('data-width');
+        bar.style.width = width;
+      });
+    }
+
+    // Intersection Observer for sections
+    const sections = document.querySelectorAll('.section');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          // Animate skills when skills section becomes visible
+          if (entry.target.id === 'skills') {
+            setTimeout(animateSkills, 300);
+          }
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+    });
+  </script>
+</body>
+</html>
